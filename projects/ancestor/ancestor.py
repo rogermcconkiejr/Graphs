@@ -67,7 +67,6 @@ def earliest_ancestor(ancestors, starting_node):
         graph.add_vertex(i[0])
         graph.add_vertex(i[1])
         graph.add_edge(i[1], i[0])
-        print(graph.vertices)
 
     q = Queue()
     q.enqueue([starting_node])
@@ -79,7 +78,10 @@ def earliest_ancestor(ancestors, starting_node):
         path = q.dequeue()
         v = path[-1]
 
-        if (len(path) >= max_path_length and v < earliest_ancestor) or (len(path) >  max_path_length):
+        smaller_value = (len(path) == max_path_length and v < earliest_ancestor)
+        longer_path = (len(path) >  max_path_length)
+
+        if smaller_value or longer_path:
             earliest_ancestor = v
             max_path_length = len(path)
 

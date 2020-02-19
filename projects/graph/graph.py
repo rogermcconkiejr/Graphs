@@ -3,6 +3,8 @@ Simple graph implementation
 """
 from util import Stack, Queue  # These may come in handy
 
+
+    
 class Graph:
 
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
@@ -14,6 +16,7 @@ class Graph:
         Add a vertex to the graph.
         """
         self.vertices[vertex_id] = set()
+
 
     def add_edge(self, v1, v2):
         """
@@ -118,20 +121,20 @@ class Graph:
             # GRAB THE LAST VERTEX FROM THE PATH
             last_v = path[-1]
             # CHECK IF IT'S THE TARGET
-            if last_v not in visited:
-                if last_v == destination_vertex:
+            if last_v == destination_vertex:
                     # IF SO, RETURN THE PATH
-                    return path
+                return path
             # Check if it's been visited
             # If it has not been visited...
-            visited.add(last_v)
-                # Mark it as visited
-                # Then add A PATH TO all neighbors to the top of the stack
-                    # (Make a copy of the path before adding)
-            for neighbor in self.get_neighbors(last_v):
-                path_copy = path.copy()
-                path_copy.append(neighbor)
-                q.enqueue(path_copy)
+            if last_v not in visited:
+                visited.add(last_v)
+                    # Mark it as visited
+                    # Then add A PATH TO all neighbors to the top of the stack
+                        # (Make a copy of the path before adding)
+                for neighbor in self.get_neighbors(last_v):
+                    path_copy = path.copy()
+                    path_copy.append(neighbor)
+                    q.enqueue(path_copy)
 
 
 
@@ -154,20 +157,20 @@ class Graph:
             # GRAB THE LAST VERTEX FROM THE PATH
             last_v = path[-1]
             # Check if it's been visited
+            # CHECK IF IT'S THE TARGET
+            if last_v == destination_vertex:
+                # IF SO, RETURN THE PATH
+                return path
             # If it has not been visited...
             if last_v not in visited:
-                # CHECK IF IT'S THE TARGET
-                if last_v == destination_vertex:
-                    # IF SO, RETURN THE PATH
-                    return path
             # Mark it as visited
-            visited.add(last_v)
-            # Then add A PATH TO all neighbors to the back of the queue
-            # (Make a copy of the path before adding)
-            for neighbor in self.get_neighbors(last_v):
-                path_copy = path.copy()
-                path_copy.append(neighbor)
-                s.push(path_copy)
+                visited.add(last_v)
+                # Then add A PATH TO all neighbors to the back of the queue
+                # (Make a copy of the path before adding)
+                for neighbor in self.get_neighbors(last_v):
+                    path_copy = path.copy()
+                    path_copy.append(neighbor)
+                    s.push(path_copy)
 
 
     def dfs_recursive(self, starting_vertex, destination_vertex, visited=None, path=None):
